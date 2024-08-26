@@ -1,19 +1,19 @@
-
-  const clone1 = {
-    person
+const person = {
+    name: 'Rick',
+    age: 77,
+    country: 'US',
   }
-  Object.freeze(clone1.person)
 
-  const clone2 = {
-      person
-    }
-    Object.freeze(clone2.person)
+  
+  const clone1 = Object.assign({}, person);
+
+  const clone2 = {...person}
 
   const samePerson = {
     person
   }
 
-  person.age = 78
+  person.age = person.age + 1
   person.country = "FR"
-  console.log(clone1)
+//   console.log(clone1)
   
