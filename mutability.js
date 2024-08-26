@@ -13,7 +13,7 @@
     person
   }
 
-  person.age = person.age+1
+  person.age = 78
   person.country = "FR"
   console.log(clone1)
   
