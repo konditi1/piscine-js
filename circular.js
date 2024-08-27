@@ -1,4 +1,3 @@
 
-const circular = {
-    circular : circular,
-}
+const circular = {};
+circular.self = circular;
