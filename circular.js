@@ -1,3 +1,4 @@
+
 const circular = {
-    circular
 }
+circular.self = circular;
