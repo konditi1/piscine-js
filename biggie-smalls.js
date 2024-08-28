@@ -1,3 +1,3 @@
-const biggie = 1.7976931348623157e+308
+const biggie = Number.MAX_VALUE
 
-const smalls = -1.7976931348623157e+308
+const smalls = Number.MIN_VALUE
