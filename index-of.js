@@ -25,14 +25,14 @@ const indexOf = (arr, val, start = 0) => {
  * @param {number} start
  * @returns {number}
  */
-const  lastIndexOf = (arr, val, start = arr.length - 1) => {
-    
-    for (let i = start; i <= 0; i--) {
+const  lastIndexOf = (arr, val, start = 0) => {
+    let index = -1
+    for (let i = start; i < arr.length; i++) {
         if (arr[i] === val) {
-            return i
+            index = i
         }
     }
-    return -1
+    return index
 }
 
     /**
@@ -52,4 +52,4 @@ const include = (arr, val, start = 0) => {
     return false
 }
 
-console.log(lastIndexOf(["t", 0, 0, "t"], "t", 2))
+console.log(lastIndexOf([1, 2, 3, 4, 5, 4, 3, 2, 1], 2))
