@@ -73,21 +73,14 @@ const divide = (a, b) => {
  * @returns {number} remainder
  */
 const modulo = (a, b) => {
-    let arg2 = false
     let neg = false
 
     if (b < 0) {
-        if (a > 0) {
-            neg = true
-        }
-        arg2 = true
         b = -b
     }
 
     if (a < 0) {
-        if (!arg2) {
             neg = true
-        }
         a = -a
     }
 
