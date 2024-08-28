@@ -6,6 +6,6 @@ is.undef = undef => typeof undef === "undefined";
 is.truthy = truthy => truthy ? true : false;
 is.falsy = falsy => !falsy;
 is.fun = fun => typeof fun === "function";
-is.def = def => def !== undefined && def !== null;
+is.def = def => def !== undefined;
 is.arr = arr => Array.isArray(arr);
 is.obj = value => value !== null && typeof value === "object" && !Array.isArray(value);
