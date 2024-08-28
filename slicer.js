@@ -6,7 +6,7 @@
  * @param {number} [end=arr.length-1] The ending index of the slice. Negative numbers are relative to the end of the string.
  * @returns {string} The sliced string.
  */
-const slice = (str, start = 0, end = str.length-1) => {
+const slice = (str, start = 0, end = str.length) => {
     let result = "";
     if (start < 0) {
         start += str.length
