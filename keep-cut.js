@@ -15,7 +15,7 @@ const keepFirst = str => str.slice(0, 2)
 const keepLast = str => str.slice(-2)
 
 const keepFirstLast = str => {
-    str = keepFirst(str)
-    str = keepLast(str)
-    return str
+   let  str1 = keepFirst(str)
+    let str2 = keepLast(str)
+    return str1 + str2
 }
