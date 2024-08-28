@@ -7,19 +7,35 @@
  * @returns {string} The sliced string.
  */
 const slice = (str, start = 0, end = str.length) => {
-    let result = "";
-    if (start < 0) {
-        start += str.length
+    if (typeof str === "string") {
+        let result = "";
+        if (start < 0) {
+            start += str.length
+        }
+
+        if (end < 0) {
+            end += str.length
+        }
+        
+        for (let i = start; i < end; i++) {
+            result += str[i]
+        }
+        return result
     }
 
-    if (end < 0) {
-        end += str.length
+    if (Array.isArray(str)) {
+        let result = [];
+        if (start < 0) {
+            start += str.length
+        }
+
+        if (end < 0) {
+            end += str.length
+        }
+        
+        for (let i = start; i < end; i++) {
+            result.push(str[i])
+        }
+        return result
     }
-    
-    for (let i = start; i < end; i++) {
-        result += str[i]
-    }
-    return result
 }
-
-console.log(slice('abcdef', 0, 2))
