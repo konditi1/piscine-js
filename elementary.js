@@ -72,7 +72,7 @@ const modulo = (a, b) => {
     if (b < 0) {
         b = -b
     }
-
+    
     let idiv = divide(a, b)
-    return (a - multiply(idiv(a, b), b))
+    return (a - multiply(divide(a, b), b))
 }
