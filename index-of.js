@@ -45,8 +45,10 @@ const includes = (arr, val, start = 0) => {
     while (start < arr.length) {
         if (arr[start] === val) {
             return true
-            start++
         }
+        start++
     }
     return false
 }
+
+console.log(includes([1, 2, 3, 4, 5], 3))
