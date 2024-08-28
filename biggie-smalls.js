@@ -1,3 +1,3 @@
-const biggie = Number.MAX_VALUE
+const biggie = Number.MAX_SAFE_INTEGER
 
-const smalls = Number.MIN_VALUE
+const smalls = Number.MIN_SAFE_INTEGER
