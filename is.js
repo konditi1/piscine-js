@@ -4,7 +4,7 @@ is.str = str => typeof str === "string";
 is.bool = bool => typeof bool === "boolean";
 is.undef = undef => typeof undef === "undefined";
 is.truthy = truthy => truthy ? true : false;
-is.falsy = falsy => falsy ? true : false;
+is.falsy = falsy => !falsy;
 is.fun = fun => typeof fun === "function";
 is.def = def => def ? true : false;
 is.arr = arr => Array.isArray(arr);
