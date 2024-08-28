@@ -65,14 +65,40 @@ const divide = (a, b) => {
     return count-1
 }
 
+/**
+ * Returns the remainder of a divided by b.
+ *
+ * @param {number} a dividend
+ * @param {number} b divisor
+ * @returns {number} remainder
+ */
 const modulo = (a, b) => {
-    if (a < 0) {
-        a = -a
-    }
+    let arg2 = false
+    let neg = false
+
     if (b < 0) {
+        if (a > 0) {
+            neg = true
+        }
+        arg2 = true
         b = -b
     }
+
+    if (a < 0) {
+        if (!arg2) {
+            neg = true
+        }
+        a = -a
+    }
+
     
     let idiv = divide(a, b)
+
+    if (neg) { 
+    return -(a - multiply(divide(a, b), b))
+}
+        
     return (a - multiply(divide(a, b), b))
 }
+
+console.log(modulo(123, -22))
