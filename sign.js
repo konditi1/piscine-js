@@ -1,6 +1,7 @@
-const sign = num => { num > 0 ? 1
-     : num < 0 ? -1 
-     : 0;
+const sign = num => { 
+    return num > 0 ? 1
+         : num < 0 ? -1 
+         : 0;
     }
 
 const sameSign = (num1, num2) => {
