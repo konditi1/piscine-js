@@ -16,10 +16,10 @@ const slice = (str, start = 0, end = str.length-1) => {
         end += str.length
     }
     
-    for (let i = start; i <= end; i++) {
+    for (let i = start; i < end; i++) {
         result += str[i]
     }
     return result
 }
 
-console.log(slice('abcdef', 2))
+console.log(slice('abcdef', 0, 2))
