@@ -41,7 +41,7 @@ const  lastIndexOf = (arr, val, start = arr.length-1) => {
      * @param {number} start
      * @returns {boolean}
      */
-const include = (arr, val, start = 0) => {
+const includes = (arr, val, start = 0) => {
     while (start < arr.length) {
         if (arr[start] === val) {
             return true
