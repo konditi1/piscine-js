@@ -5,7 +5,11 @@ const sign = num => {
     }
 
 const sameSign = (num1, num2) => {
-    if (num1 <= 0 && num2 <= 0) {
+    if (num1 < 0 && num2 === 0) {
+        return false
+     } else if (num2 < 0 && num1 === 0) {
+        return false
+      } else if (num1 <= 0 && num2 <= 0) {
         return true
     } else if (num1 >= 0 && num2 >= 0) {
         return true
@@ -13,3 +17,5 @@ const sameSign = (num1, num2) => {
         return false
     }
 }
+
+console.log(!sameSign(0, -99))
