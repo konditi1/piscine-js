@@ -6,18 +6,20 @@
  * @param {number} [end=arr.length-1] The ending index of the slice. Negative numbers are relative to the end of the string.
  * @returns {string} The sliced string.
  */
-const slice = (str, start = 0, end = arr.length-1) => {
+const slice = (str, start = 0, end = str.length-1) => {
     let result = "";
     if (start < 0) {
         start += str.length
     }
-    console.log(start)
+
     if (end < 0) {
         end += str.length
     }
-    console.log(end)
-    for (let i = start; i < end; i++) {
+    
+    for (let i = start; i <= end; i++) {
         result += str[i]
     }
     return result
 }
+
+console.log(slice('abcdef', 2))
