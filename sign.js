@@ -1,1 +1,4 @@
-const sign = num => num > 0 ? 1 : num < 0 ? -1 : 0;
+const sign = num => { num > 0 ? 1
+     : num < 0 ? -1 
+     : 0;
+    }
