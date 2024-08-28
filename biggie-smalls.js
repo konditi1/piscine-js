@@ -1,3 +1,3 @@
-const biggie = Number.MAX_SAFE_INTEGER
+const biggie = Infinity
 
-const smalls = Number.MIN_SAFE_INTEGER
+const smalls = Number.MIN_VALUE
