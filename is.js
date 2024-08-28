@@ -8,4 +8,4 @@ is.falsy = falsy => falsy ? true : false;
 is.fun = fun => typeof fun === "function";
 is.def = def => def ? true : false;
 is.arr = arr => Array.isArray(arr);
-is.obj = value => typeof value === "object" &&  value !== null;
+is.obj = value => value !== null && typeof value === "object" && !Array.isArray(value);
