@@ -1,4 +1,4 @@
-const imul = (a, b) => {
+const multiply = (a, b) => {
     let result = 0;
 
     for (let i = 0; i < b; i++) {
@@ -7,7 +7,7 @@ const imul = (a, b) => {
     return result
 }
 
-const idiv = (a, b) => {
+const divide = (a, b) => {
     let count = 0;
 
     while (a >= 0) {
@@ -17,6 +17,8 @@ const idiv = (a, b) => {
     return count-1
 }
 
-const imod = (a, b) => {
-    return (a - imul(idiv(a, b), b))
+const modulo = (a, b) => {
+    return (a - multiply(idiv(a, b), b))
 }
+
+console.log(multiply(2, 3))
