@@ -15,7 +15,7 @@ const keepFirst = str => str.slice(0, 2)
 const keepLast = str => str.slice(-2)
 
 const keepFirstLast = str => {
-    if (str.length <= 2) {
+    if (str.length <= 4) {
         return str
     }
    let  str1 = keepFirst(str)
@@ -24,4 +24,4 @@ const keepFirstLast = str => {
     return str1 + str2
 }
 
-console.log(keepFirstLast('af'))
+console.log(keepFirstLast('afk'))
