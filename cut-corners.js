@@ -33,22 +33,12 @@ const floor = num => {
 const trunc = num => parseint(num);
 
 const parseint = num => {
-    let result = 0;
-
-    // For positive numbers
     if (num >= 0) {
-        while (num >= 1) {
-            num -= 1;
-            result += 1;
-        }
+        // For positive numbers, use the fact that the integer part is the floor of num
+        return num - (num % 1);
+    } else {
+        // For negative numbers, use the fact that the integer part is the ceiling of num
+        return num - (num % 1);
     }
-    // For negative numbers
-    else {
-        while (num <= -1) {
-            num += 1;
-            result -= 1;
-        }
-    }
-    
-    return result;
 };
+console.log(parseint(4.2))
