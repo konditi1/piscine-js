@@ -51,9 +51,7 @@ const split = (str, sep = undefined, limit = str.length) => {
             i++
         }
     }
-    if (temp !== "") {
-        result.push(temp)
-    }
+    result.push(temp)
 
     return result
 
