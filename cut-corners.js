@@ -1,6 +1,4 @@
 const round = num => {
-    // let roundArr= []
-    // for (let num of numbers) {
         let neg = false
         if (num < 0) {
             neg = true
@@ -14,53 +12,36 @@ const round = num => {
         }
 
         if (neg) {
-            // roundArr.push(-num)
             return -num
-        } //else {
-            // roundArr.push(num)
-        // }
-    // }
+        }
     return num
 }
 
-const ceil = numbers => {
-    let ceilArr= []
-    for (let num of numbers) {
+const ceil = num => {
         if (num < 0) {
             num = parseint(num)
-            ceilArr.push(num)
+            return (num)
         } else {
             if (num - parseint(num) > 0) {
                 num = parseint(num) + 1
             } else {
                 num = parseint(num)
             }
-            ceilArr.push(num)
+            return (num)
         }
-
-    }
-    return ceilArr
 }
 
-const floor = numbers => {
-    let floorArr = []
-    for (let num of numbers) {
+const floor = num => {
+    
         if (num < 0) {
-        floorArr.push(parseint(num) - 1)            
+        return (parseint(num) - 1)            
         } else {
-            floorArr.push(parseint(num))
+            return (parseint(num))
         }
     }
-    return floorArr
-}
 
-const trunc = numbers => {
-    let truncArr = []
-    for (let num of numbers) {
-        truncArr.push(parseint(num))
-    }
-    return truncArr
-}
+
+const trunc = num => parseint(num)
 
 
 const parseint = num =>{
@@ -83,4 +64,4 @@ const parseint = num =>{
     return result;
 }
 
-console.log(round(-3.7))
+console.log(ceil(-5.9))
