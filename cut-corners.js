@@ -7,10 +7,10 @@ const round = numbers => {
             num = -num
         }
 
-        if (num - parseInt(num) >= 0.5) {
-            num = parseInt(num) + 1
+        if (num - parseint(num) >= 0.5) {
+            num = parseint(num) + 1
         } else {
-            num = parseInt(num)
+            num = parseint(num)
         }
 
         if (neg) {
@@ -26,13 +26,13 @@ const ceil = numbers => {
     let ceilArr= []
     for (let num of numbers) {
         if (num < 0) {
-            num = parseInt(num)
+            num = parseint(num)
             ceilArr.push(num)
         } else {
-            if (num - parseInt(num) > 0) {
-                num = parseInt(num) + 1
+            if (num - parseint(num) > 0) {
+                num = parseint(num) + 1
             } else {
-                num = parseInt(num)
+                num = parseint(num)
             }
             ceilArr.push(num)
         }
@@ -45,9 +45,9 @@ const floor = numbers => {
     let floorArr = []
     for (let num of numbers) {
         if (num < 0) {
-        floorArr.push(parseInt(num) - 1)            
+        floorArr.push(parseint(num) - 1)            
         } else {
-            floorArr.push(parseInt(num))
+            floorArr.push(parseint(num))
         }
     }
     return floorArr
@@ -56,9 +56,18 @@ const floor = numbers => {
 const trunc = numbers => {
     let truncArr = []
     for (let num of numbers) {
-        truncArr.push(parseInt(num))
+        truncArr.push(parseint(num))
     }
     return truncArr
 }
 
-console.log(trunc([3.7, -3.7, 3.1, -3.1]))
+
+const parseint = num =>{
+    if ((num).toFixed() - num > 0) {
+        return (num).toFixed() - 1
+    }
+   return (num).toFixed()
+} 
+
+
+console.log(parseint(5.898))
