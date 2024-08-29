@@ -1,6 +1,6 @@
 const round = numbers => {
-    let roundArr= []
-    for (let num of numbers) {
+    // let roundArr= []
+    // for (let num of numbers) {
         let neg = false
         if (num < 0) {
             neg = true
@@ -14,12 +14,13 @@ const round = numbers => {
         }
 
         if (neg) {
-            roundArr.push(-num)
-        } else {
-            roundArr.push(num)
-        }
-    }
-    return roundArr
+            // roundArr.push(-num)
+            return -num
+        } //else {
+            // roundArr.push(num)
+        // }
+    // }
+    return num
 }
 
 const ceil = numbers => {
