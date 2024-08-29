@@ -1,4 +1,4 @@
-const round = numbers => {
+const round = num => {
     // let roundArr= []
     // for (let num of numbers) {
         let neg = false
@@ -82,3 +82,5 @@ const parseint = num =>{
     }
     return result;
 }
+
+console.log(round(-3.7))
