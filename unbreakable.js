@@ -16,6 +16,9 @@ const split = (str, sep = undefined, limit = str.length) => {
     if (limit > str.length) {
         limit = str.length
     }
+    if (str === "") {
+        return [""]
+    }
     
     if (limit === 0) {
         return []
@@ -57,4 +60,4 @@ const split = (str, sep = undefined, limit = str.length) => {
 
 }
 
-console.log(split('ee,ff,g,', ','))
+console.log(split('', 'Riad'))
