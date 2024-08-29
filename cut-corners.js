@@ -1,44 +1,81 @@
 const round = num => {
-    let neg = false;
-    if (num < 0) {
-        neg = true;
-        num = -num;
-    }
+        let neg = false
+        if (num < 0) {
+            neg = true
+            num = -num
+        }
 
-    if (num - parseint(num) >= 0.5) {
-        num = parseint(num) + 1;
-    } else {
-        num = parseint(num);
-    }
+        if (num - parseint(num) >= 0.5) {
+            num = parseint(num) + 1
+        } else {
+            num = parseint(num)
+        }
 
-    return neg ? -num : num;
-};
+        if (neg) {
+            return -num
+        }
+    return num
+}
 
 const ceil = num => {
-    if (num < 0) {
-        return parseint(num);  // For negative numbers, ceil is the integer part
-    } else {
-        return (num - parseint(num) > 0) ? parseint(num) + 1 : parseint(num);
-    }
-};
+        if (num < 0) {
+            num = parseint(num)
+            return (num)
+        } else {
+            if (num - parseint(num) > 0) {
+                num = parseint(num) + 1
+            } else {
+                num = parseint(num)
+            }
+            return (num)
+        }
+}
 
 const floor = num => {
-    if (num < 0) {
-        return (num === parseint(num)) ? num : parseint(num) - 1;
-    } else {
-        return parseint(num);
+    
+        if (num < 0) {
+        return (parseint(num) - 1)            
+        } else {
+            return (parseint(num))
+        }
     }
-};
 
-const trunc = num => parseint(num);
+
+const trunc = num => parseint(num)
+
 
 const parseint = num => {
+    // Handle positive numbers
     if (num >= 0) {
-        // For positive numbers, use the fact that the integer part is the floor of num
-        return num - (num % 1);
-    } else {
-        // For negative numbers, use the fact that the integer part is the ceiling of num
-        return num - (num % 1);
+        let result = 0;
+        // Subtract the largest possible power of 10 and adjust result accordingly
+        while (num >= 1) {
+            let subtract = 1;
+            let factor = 1;
+            while (num >= subtract * 10) {
+                subtract *= 10;
+                factor *= 10;
+            }
+            num -= subtract;
+            result += factor;
+        }
+        return result;
+    }
+    
+    // Handle negative numbers
+    else {
+        let result = 0;
+        // Add the largest possible power of 10 and adjust result accordingly
+        while (num <= -1) {
+            let add = 1;
+            let factor = 1;
+            while (num <= -add * 10) {
+                add *= 10;
+                factor *= 10;
+            }
+            num += add;
+            result -= factor;
+        }
+        return result;
     }
 };
-console.log(parseint(4.2))
