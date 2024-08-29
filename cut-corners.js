@@ -24,7 +24,7 @@ const ceil = num => {
 
 const floor = num => {
     if (num < 0) {
-        return (num === parseint(num)) ? num : parseint(num) - 1;  // Subtract 1 only if not already an integer
+        return (num === parseint(num)) ? num : parseint(num) - 1;
     } else {
         return parseint(num);
     }
@@ -49,5 +49,14 @@ const parseint = num => {
             result -= 1;
         }
     }
+    if (num > 0 && num < 1) {
+        result = 0;
+    } else if (num < 0 && num > -1) {
+        result = -1;
+    }
     return result;
 };
+console.log(parseint(-1))
+console.log(ceil(4.5))
+console.log(floor(-4.9))
+console.log(trunc(2.2))
