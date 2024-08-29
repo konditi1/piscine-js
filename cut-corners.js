@@ -63,11 +63,21 @@ const trunc = numbers => {
 
 
 const parseint = num =>{
-    if ((num).toFixed() - num > 0) {
-        return (num).toFixed() - 1
+    let result = 0;
+
+    // For positive numbers
+    if (num > 0) {
+        while (num >= 1) {
+            num -= 1;
+            result += 1;
+        }
     }
-   return (num).toFixed()
-} 
-
-
-console.log(parseint(5.898))
+    // For negative numbers
+    else if (num < 0) {
+        while (num <= -1) {
+            num += 1;
+            result -= 1;
+        }
+    }
+    return result;
+}
