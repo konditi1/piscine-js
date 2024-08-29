@@ -1,9 +1,13 @@
 const triangle = (str, num) => {
+    let result = [];
     for(let row = 1; row <= num; row++) {
-        let result ="";
+        let tria ="";
         for(let col = 0; col < row; col++) {
-            result += str
+            tria += str
         }
-        console.log(result)
+        result.push(tria)
     }
+    return result
 }
+
+console.log(triangle('*', 5))
