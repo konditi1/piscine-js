@@ -41,7 +41,7 @@ const split = (str, sep = undefined, limit = str.length) => {
     let temp = "";
     let i = 0;
     while (i < limit) {
-        if ((i + sep.length < limit) && (str.slice(i, i + sep.length) === sep)) {
+        if ((i + sep.length <= limit) && (str.slice(i, i + sep.length) === sep)) {
             result.push(temp)
             temp = ""
             i += sep.length
@@ -58,3 +58,5 @@ const split = (str, sep = undefined, limit = str.length) => {
     return result
 
 }
+
+console.log(split('ee,ff,g,', ','))
