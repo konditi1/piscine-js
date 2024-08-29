@@ -1,12 +1,10 @@
 const pyramid = (str, num) => {
     let result = "";
     for(let row = 1; row <= num; row++) {
-        let pyra = "";
         let spaces = ' '.repeat(num - row);
         let stars = str.repeat(2 * row - 1);
 
-        pyra += spaces + stars
-        result += pyra
+        result += spaces + stars
 
         if (row < num) {
             result += "\n"
@@ -15,4 +13,4 @@ const pyramid = (str, num) => {
     return result
 }
 
-console.log(pyramid('*', 5))
+console.log(pyramid('{}', 12))
