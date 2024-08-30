@@ -1,24 +1,25 @@
 const pyramid = (str, num) => {
     let result = ""
+    let k = 0;
     for (let i = 1; i <= num; i++) {
         let temp = '';
       
         // Add spaces
-        for (let j = 1; j <= num - i; j++) {
-          temp += ' ';
+        for (let j = 1; j <= (num - i) + 1; j++) {
+          temp += " ";
         }
-      
-        // Add stars
-        for (let k = 1; k <= 2 * i - 1; k++) {
-          temp += str;
+        while (k !== (2*i-1)) {
+            temp += str
+            k++
         }
-      
-        // Print the row
+
+        k = 0
         result += temp;
         if (i < num) {
             result += "\n"
         }
-      }
-      return result
+    }
+return result
 }
-// console.log(pyramid('*', 5))
+
+    console.log(pyramid('*', 12))
