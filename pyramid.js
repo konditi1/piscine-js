@@ -5,7 +5,7 @@ const pyramid = (str, num) => {
         let temp = '';
       
         // Add spaces
-        for (let j = 1; j <= (num - i) + 1; j++) {
+        for (let j = 1; j <= (num - i); j++) {
           temp += " ";
         }
         while (k !== (2*i-1)) {
