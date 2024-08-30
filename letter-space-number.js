@@ -1,11 +1,17 @@
 const letterSpaceNumber = (str) => {
     let result = [];
-    arr = str.split(",");
-    let regex = /\s\d?/
-    for (let i = 0; i < arr.length; i++) {
-        if ((arr[i].match(regex)) && (arr[i].match(regex)[0] !== " ")) {
-            result.push(arr[i][0]+ " "+ arr[i].match(regex)[0])
-        }
-    }
+    let regex = /\b\d\b(?![a-zA-Z])/g
+    
+            result = str.match(regex)
+            for (let i = 0; i < result.length; i++) {
+                for (let j = 0; j < str.length; j++) {
+                    if (str[j] === result[i]) {
+                        result[i] = str[j-2] + " "+ result[i]
+                    }
+                }
+            }
+
     return result
 }
+
+console.log(letterSpaceNumber('He is 8 or 9 years old, not 10.'))
