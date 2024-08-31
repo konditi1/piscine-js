@@ -7,8 +7,5 @@ const sameAmount = (str, regEx1, regEx2) => {
     if (result2 === null) {
         return false
     }
-    console.log(result, result2)
-
-    return result === result2
-    
+    return result.length === result2.length
 }
