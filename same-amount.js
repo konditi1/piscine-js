@@ -10,5 +10,4 @@ const sameAmount = (str, regEx1, regEx2) => {
     console.log(result, result2)
     return result.length === result2.length
 }
-const data = "q qqqqqqqq qqqqqqqq qqqqqqqq"
 console.log(!sameAmount(data, /q /, /qqqqqqq/))
