@@ -4,7 +4,7 @@ const sameAmount = (str, regEx1, regEx2) => {
 
     console.log("Pattern 1 matches:", result1);
     console.log("Pattern 2 matches:", result2);
-    console.log(str)
+    console.log(regEx1, regEx2)
 
     return result1.length === result2.length
 }
