@@ -1,23 +1,22 @@
-const firstDayWeek = (num, yearStr) => {
-    const year = parseInt(yearStr, 10);
-    const firstJan = new Date(`${year}-01-01`); // Force the correct year with a specific format
-    const dayOfWeek = firstJan.getDay(); // Day of the week for January 1st
-    
-    // Calculate the offset from Monday (1). If Sunday (0), adjust to previous Monday (-6).
-    const offsetToMonday = (dayOfWeek === 0) ? -6 : 1 - dayOfWeek;
-    
-    // Calculate the first Monday of the year
-    const firstMonday = new Date(firstJan.getTime() + offsetToMonday * 86400000);
-    
-    // Calculate the target week date by adding (num - 1) weeks to the first Monday
-    const targetDate = new Date(firstMonday.getTime() + (num - 1) * 7 * 86400000);
-    
+const firstDayWeek = (num, str) => {
+    const oneDayMs = 86400000; // One day in milliseconds
+    const year = parseInt(str, 10); // Convert year string to an integer
+    const startDate = new Date(year, 0, 1); // January 1st of the given year
+
+    // Calculate the first day of the target week
+    let n = startDate.getTime() + (num - 1) * 7 * oneDayMs;
+
+    // Adjust n to get to the first day of that week (Monday)
+    const firstDay = new Date(n).getDay();
+    n -= (firstDay === 0 ? 6 : firstDay - 1) * oneDayMs; // Adjust to Monday
+
     // If the target week starts in the previous year, return January 1st of the given year
-    if (targetDate.getFullYear() !== year) {
-        return changeFormat(firstJan.toLocaleDateString());
+    const resultDate = new Date(n);
+    if (resultDate.getFullYear() !== year) {
+        return changeFormat(startDate.toLocaleDateString());
     }
 
-    return changeFormat(targetDate.toLocaleDateString());
+    return changeFormat(resultDate.toLocaleDateString());
 };
 
 const changeFormat = (date) => {
@@ -30,6 +29,3 @@ const changeFormat = (date) => {
     
     return `${day}-${month}-${year}`;
 };
-
-// Example usage
-console.log(firstDayWeek(2, '0001')); // Expected output: 08-01-0001
