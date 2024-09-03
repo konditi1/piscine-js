@@ -3,7 +3,7 @@ function dayOfTheYear(date) {
     let startOfYear = new Date(date.getFullYear(), 0, 1);
     
     // Calculate the difference in milliseconds between the two dates
-    let diffInMs = date - startOfYear;
+    let diffInMs = date.setHours(0,0,0,0) - startOfYear.setHours(0,0,0,0);
 
     let millisecondsInDay = 24 * 60 * 60 * 1000;
     
