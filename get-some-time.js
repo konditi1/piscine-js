@@ -1,27 +1,25 @@
-const firstDayWeek = (num, str) => {
-    const oneDayMs = 86400000; // One day in milliseconds
-    const startDate = new Date(str);
-
-    // Calculate the first day of the target week
-    let n = startDate.getTime() + (num * 7 * oneDayMs);
-
-    // Adjust n to get to the first day of that week (Monday)
-    const firstDay = new Date(n).getDay();
-    n -= (firstDay - 1) * oneDayMs; // Adjust by the difference to Monday
-
-    // Ensure we are still within the correct year
-    const resultDate = new Date(n);
-    if (resultDate.getFullYear() !== startDate.getFullYear()) {
-        resultDate.setFullYear(startDate.getFullYear());
+const firstDayWeek = (num, yearStr) => {
+    const year = parseInt(yearStr, 10);
+    const firstJan = new Date(year, 0, 1);
+    const dayOfWeek = firstJan.getDay();
+    
+    
+    const offsetToMonday = (dayOfWeek === 0) ? -6 : 1 - dayOfWeek;
+    
+   
+    const firstMonday = new Date(firstJan.getTime() + offsetToMonday * 86400000);
+    const targetDate = new Date(firstMonday.getTime() + (num - 1) * 7 * 86400000);
+    
+    if (targetDate.getFullYear() < year) {
+        return changeFormat(firstJan.toLocaleDateString());
     }
 
-    return changeFormat(resultDate.toLocaleDateString());
+    return changeFormat(targetDate.toLocaleDateString());
 };
 
 const changeFormat = (date) => {
     let [month, day, year] = date.split('/');
     
-    // Ensure the day and month are two digits and the year is four digits
     month = month.padStart(2, '0');
     day = day.padStart(2, '0');
     year = year.padStart(4, '0');
