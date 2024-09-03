@@ -1,8 +1,10 @@
 const isValid = date => {
-    if (!(date instanceof Date)) {
-        return false;
+    if (typeof date === 'number') {
+        return !isNaN(new Date(date).getTime());
+    } else if (date instanceof Date) {
+        return !isNaN(date.getTime());
     }
-    
+
     let formatedDate = new Date(date)
     if (formatedDate.toString() === "Invalid Date") {
         return false
@@ -10,9 +12,6 @@ const isValid = date => {
 
     return true
 }
-
-console.log(isValid(new Date()))
-console.log(isValid("2020-01-01"))
 
 const isAfter = (date1, date2) => {
     if (!isValid(date1) || !isValid(date2)) {
