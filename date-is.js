@@ -1,14 +1,13 @@
-const isValid = date => {
-    let formatedDate = new Date(date)
-    if (formatedDate.toString() === "Invalid Date") {
-        return false
+const isValidDateObj = (date) => date instanceof Date && !isNaN(date);
+function isValid(date) {
+    if (typeof date === 'number' && !isNaN(date)) {
+        const newDate = new Date(date)
+        return isValidDateObj(newDate)
     }
-   
-    if (!(formatedDate instanceof Date) || typeof(formatedDate) !== 'number') {
-        return false
-    }
-    return true
-}
+    return isValidDateObj(date);
+  }
+
+console.log(isValid("2020-01-01"))
 
 const isAfter = (date1, date2) => {
     if (!isValid(date1) || !isValid(date2)) {
@@ -65,5 +64,3 @@ const isPast = date => {
         return false
     }
 }
-
-console.log(isValid('2013-01-01'))
