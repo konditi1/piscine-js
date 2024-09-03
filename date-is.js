@@ -2,9 +2,12 @@ const isValid = date => {
     let formatedDate = new Date(date)
     if (formatedDate.toString() === "Invalid Date") {
         return false
-    } else {
-        return true
     }
+   
+    if (!(formatedDate instanceof Date) || typeof(formatedDate) !== 'number') {
+        return false
+    }
+    return true
 }
 
 const isAfter = (date1, date2) => {
@@ -62,3 +65,5 @@ const isPast = date => {
         return false
     }
 }
+
+console.log(isValid('2013-01-01'))
