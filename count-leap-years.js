@@ -3,7 +3,7 @@ function countLeapYears(date) {
     
     let leapYearsCount = 0;
 
-    for (let y = 1; y <= year; y++) {
+    for (let y = 1; y < year; y++) {
         if (isLeapYear(y)) {
             leapYearsCount++;
         }
