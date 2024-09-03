@@ -1,8 +1,9 @@
 const isValid = date => {
-    if (typeof date === 'number') {
-        return !isNaN(new Date(date).getTime());
-    } else if (date instanceof Date) {
-        return !isNaN(date.getTime());
+    if (new Date(date).toString() === "Invalid Date") {
+        return false;
+    }
+    if (!(date instanceof Date) && typeof date !== "number") {
+        return false;
     }
 
     let formatedDate = new Date(date)
