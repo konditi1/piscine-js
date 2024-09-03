@@ -28,7 +28,10 @@ const addWeek = date => {
 }
 
 const timeTravel = (obj) => {
-    formatedTime = new Date(obj.date)
+    let formatedTime = new Date(obj.date)
+    // obj.hour = formatedTime.setHours()
+    // obj.minute = formatedTime.setMinutes()
+    // obj.second = formatedTime.setMi
 
     return formatedTime
 }
