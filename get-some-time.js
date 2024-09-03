@@ -1,27 +1,22 @@
-    /**
-     * Returns the first Monday of the week that is num weeks away from str.
-     * 
-     * @param {number} num - The number of weeks to offset by
-     * @param {string} str - The date string to base the offset on
-     * @returns {string} - The first monday of that week
-     */
-    
 const firstDayWeek = (num, str) => {
-    const oneDayMs = 86400000;
-    const oneWeekMs = oneDayMs * 7; 
-    const date = new Date(str);
-    
-    // Calculate the target week
-    const targetDate = new Date(date.getTime() + oneWeekMs * num);
-    const currentYear = targetDate.getFullYear();
+    const oneDayMs = 86400000; // One day in milliseconds
+    const startDate = new Date(str);
 
-    // Adjust the target date to the first Monday of that week
-    while (targetDate.getDay() !== 1 && targetDate.getFullYear() === currentYear) {
-        targetDate.setTime(targetDate.getTime() - oneDayMs);
+    // Calculate the first day of the target week
+    let n = startDate.getTime() + (num * 7 * oneDayMs);
+
+    // Adjust n to get to the first day of that week (Monday)
+    const firstDay = new Date(n).getDay();
+    n -= (firstDay - 1) * oneDayMs; // Adjust by the difference to Monday
+
+    // Ensure we are still within the correct year
+    const resultDate = new Date(n);
+    if (resultDate.getFullYear() !== startDate.getFullYear()) {
+        resultDate.setFullYear(startDate.getFullYear());
     }
 
-    return changeFormat(targetDate.toLocaleDateString());
-}
+    return changeFormat(resultDate.toLocaleDateString());
+};
 
 const changeFormat = (date) => {
     let [month, day, year] = date.split('/');
@@ -32,4 +27,4 @@ const changeFormat = (date) => {
     year = year.padStart(4, '0');
     
     return `${day}-${month}-${year}`;
-}
+};
