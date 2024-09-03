@@ -1,6 +1,10 @@
-const dayOfTheYear = (date) => {
-    const startOfYear = new Date(date.getFullYear(), 0, 1);
-    return Math.ceil((date - startOfYear) / 86400000) + 1;
+const dayOfTheYear= (date) => {
+    let days = 1;
+    while (!isFirstofFirst(date)) {
+        date.setDate(date.getDate() - 1);
+        days++;
+    }
+    return days;
 }
 
 const isFirstofFirst = (date) => {
