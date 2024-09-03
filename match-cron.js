@@ -1,36 +1,49 @@
-// Function to parse the cron string and return an object with cron fields
-const parseCron = (cronString) => {
-    const fields = cronString.split(" ");
-    return {
-        minute: fields[0] !== "*" ? fields[0] : null,
-        hour: fields[1] !== "*" ? fields[1] : null,
-        date: fields[2] !== "*" ? fields[2] : null,
-        month: fields[3] !== "*" ? fields[3] : null,
-        day: fields[4] !== "*" ? fields[4] : null,
-    };
-};
+function parseCron(inputCron) {
+    let cron = {};
+    inputCron.split(" ").forEach((part, i) => {
+        if (part === "*") return;
+        switch (i) {
+            case 0:
+                cron.minute = part;
+                break;
+            case 1:
+                cron.hour = part;
+                break;
+            case 2:
+                cron.date = part;
+                break;
+            case 3:
+                cron.month = part;
+                break;
+            case 4:
+                cron.day = part;
+                break;
+        }
+    });
+    return cron;
+}
 
-// Function to extract date components from a Date object
-const extractDateComponents = (date) => {
+function convertDate(date) {
     return {
         minute: date.getMinutes(),
         hour: date.getHours(),
         date: date.getDate(),
         month: date.getMonth() + 1,
-        day: (date.getDay() + 1) % 7 || 7,
+        day: date.getDay(),
     };
-};
+}
 
-// Function to compare the cron pattern with the date components
-const matchesPattern = (pattern, value) => {
-    return pattern === null || pattern === value.toString();
-};
+function cronMatches(cron, date) {
+    for (let key in cron) {
+        if (cron[key] !== date[key].toString()) {
+            return false;
+        }
+    }
+    return true;
+}
 
-// Main function to check if the date matches the cron pattern
-const matchCron = (inputCron, date) => {
+function matchCron(inputCron, date) {
     const cron = parseCron(inputCron);
-    const dateComponents = extractDateComponents(date);
-
-    // Compare each component
-    return Object.keys(cron).every(key => matchesPattern(cron[key], dateComponents[key]));
-};
+    const dateObject = convertDate(date);
+    return cronMatches(cron, dateObject);
+}
