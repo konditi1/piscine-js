@@ -29,18 +29,9 @@ const addWeek = date => {
 
 const timeTravel = (obj) => {
     let formatedTime = new Date(obj.date)
-    // obj.hour = formatedTime.setHours()
-    // obj.minute = formatedTime.setMinutes()
-    // obj.second = formatedTime.setMi
+    formatedTime.setHours(obj.hour)
+    formatedTime.setMinutes(obj.minute)
+    formatedTime.setSeconds(obj.second)
 
     return formatedTime
 }
-
-// console.log(timeTravel({
-//   date: new Date('2020-05-29 23:25:22'),
-//   hour: 21,
-//   minute: 22,
-//   second: 22,
-// }).toString())
-
-// console.log(addWeek("0001-01-09"))
