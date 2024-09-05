@@ -10,18 +10,18 @@ function every(arr, callback) {
 function some(arr, callback) {
     for (let i = 0; i < arr.length; i++) {
         if (callback(arr[i], i, arr)) {
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 
 function none(arr, callback) {
     for (let i = 0; i < arr.length; i++) {
         if (callback(arr[i], i, arr)) {
-            return true;
+            return false;
         }
     }
-    return false;
+    return true;
 }
