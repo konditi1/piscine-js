@@ -12,7 +12,7 @@ const upperCasingStates = states => states.map(state => {
 
 const fahrenheitToCelsius = arr => arr.map(val => {
     let splitVal = val.split("°")
-    num = Number(splitVal[0])
+    let num = Number(splitVal[0])
     return (Math.floor((num - 32)/1.8))    
 })
 
