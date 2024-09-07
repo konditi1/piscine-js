@@ -1,0 +1,199 @@
+function isLeapYear(year) {
+    if (year % 4 === 0) {
+        if (year % 100 === 0) {
+        if (year % 400 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+        } else {
+        return true;
+        }
+    } else {
+        return false;
+    }
+}
+function countLeapYears(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    let count = 0;
+    for (let i = 1; i < year; i++) {
+        if (isLeapYear(i)) count++;
+    }
+    return count;
+}
+console.log(countLeapYears(new Date('1664-08-09')))
+
+
+const isValidDateObj = (date) => date instanceof Date && !isNaN(date);
+function isValid(date) {
+    if (typeof date === 'number' && !isNaN(date)) {
+        const newDate = new Date(date)
+        return isValidDateObj(newDate)
+    }
+    return isValidDateObj(date);
+  }
+  function toDate(arg) {
+    return typeof arg === 'number' ? new Date(arg) : arg;
+  }
+  
+  function isAfter(date1, date2) {
+    date1 = toDate(date1);
+    date2 = toDate(date2);
+    if (!isValid(date1) || !isValid(date2)) return false;
+    return date1.getTime() > date2.getTime();
+  }
+  
+  function isBefore(date1, date2) {
+    date1 = toDate(date1);
+    date2 = toDate(date2);
+    if (!isValid(date1) || !isValid(date2)) return false;
+    return date1.getTime() < date2.getTime();
+  }
+  
+  function isFuture(date) {
+    if (!isValid(date)) return false;
+    return date.getTime() > new Date().getTime();
+  }
+  
+  function isPast(date) {
+    if (!isValid(date)) return false;
+    return date.getTime() < new Date().getTime();
+  }
+
+  const dayOfTheYear = (date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    let dayOfYear = 0
+    for (let i = 0; i < month; i++) {
+        dayOfYear += daysInMonth(i, year);
+    }
+    dayOfYear += day;
+    return dayOfYear;
+}
+const daysInMonth = (month, year) => {
+    const days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (month === 1 && isLeapYear(year)) return 29;
+    return days[month];
+}
+function isLeapYear(year) {
+    if (year % 4 === 0) {
+        if (year % 100 === 0) {
+        if (year % 400 === 0) {
+            return true;
+        } else {
+            return false;
+        }
+        } else {
+        return true;
+        }
+    } else {
+        return false;
+    }
+}
+console.log(dayOfTheYear(new Date('2048-11-08')))
+console.log(dayOfTheYear(new Date('0001-01-01'))); // Output: 1
+
+function firstDayWeek(week, year) {
+    let time = new Date(year);
+    if (week === 1) {
+        time.setHours(24);
+        return formattedDate(time);
+    }
+    
+    let dayPlus = week * 7 * 24;
+    time.setHours(dayPlus - 123);
+    
+    for (let i = 0; i < 7; i++) {
+        if (getWeekDay(time) === 'Monday') {
+            return formattedDate(time);
+        }
+        time.setHours(-24);
+    }
+    return time;
+}
+function getWeekDay(date) {
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay() - 1];
+}
+function formattedDate(d) {
+    let month = String(d.getMonth() + 1).padStart(2, '0');
+    let day = String(d.getDate() - 1).padStart(2, '0');
+    let year = String(d.getFullYear()).padStart(4, '0');
+    return `${day}-${month}-${year}`;
+}
+// Testing the function
+console.log(firstDayWeek(1, '0001')); // Expected: '01-01-0001'
+console.log(firstDayWeek(2, '0001')); // Expected: '08-01-0001'
+console.log(firstDayWeek(3, '0001')); // Expected: '15-01-0001'
+console.log(firstDayWeek(52, '0001')); // Expected: '22-12-0001'
+
+
+function matchCron(cronString, date) {
+    const cronParts = cronString.split(' ');
+    const [minute, hour, dayOfMonth, month, dayOfWeek] = cronParts;
+  
+    const d = new Date(date);
+  
+    return (
+      matchPart(minute, d.getMinutes()) &&
+      matchPart(hour, d.getHours()) &&
+      matchPart(dayOfMonth, d.getDate()) &&
+      matchPart(month, d.getMonth() + 1) && // getMonth() returns 0-11
+      matchPart(dayOfWeek, d.getDay() === 0 ? 7 : d.getDay()) // Sunday is 0, we want it to be 7
+    );
+  }
+  
+  function matchPart(cronPart, datePart) {
+    if (cronPart === '*') {
+      return true;
+    }
+    return parseInt(cronPart) === datePart;
+  }
+  
+  console.log(matchCron('9 * * * *', new Date('2020-05-30 18:09:00'))); // -> true
+console.log(matchCron('9 * * * *', new Date('2020-05-30 19:09:00'))); // -> true
+console.log(matchCron('9 * * * *', new Date('2020-05-30 19:21:00'))); // -> false
+  
+
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const isFriday = (date) => {
+    const d = new Date(date);
+    return days[d.getDay()] === "Friday";
+}
+const isWeekend = (date) => {
+    const d = new Date(date);
+    return days[d.getDay()] === "Saturday" || days[d.getDay] === "Sunday";;
+}
+function isLeapYear(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    if (year % 4 === 0) {
+      if (year % 100 === 0) {
+        if (year % 400 === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+}
+const isLastDayOfMonth = (date) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = d.getMonth(); 
+    
+    const firstDayOfNextMonth = new Date(year, month + 1, 1);
+    
+    const lastDayOfMonth = new Date(firstDayOfNextMonth - 1);
+    
+    return date.getDate() === lastDayOfMonth.getDate() &&
+           date.getMonth() === lastDayOfMonth.getMonth() &&
+           date.getFullYear() === lastDayOfMonth.getFullYear();
+};
+console.log(isFriday(new Date('2014-08-29')))
