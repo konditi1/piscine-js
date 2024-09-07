@@ -1,46 +1,38 @@
 let lastCircle = null;
 let box = null;
-let hasEntered = false;
 
 export function createCircle(event) {
+  const circleRadius = 25;
   const circle = document.createElement('div');
   circle.className = 'circle';
   circle.style.position = 'absolute';
 
-  // Adjust circle position to center it at the mouse click
-  const circleRadius = 25;
+  // Position circle at the mouse click, adjusted for radius
   circle.style.left = `${event.clientX - circleRadius}px`;
   circle.style.top = `${event.clientY - circleRadius}px`;
   circle.style.backgroundColor = 'white';
 
   document.body.appendChild(circle);
   lastCircle = circle;
-  hasEntered = false;
 }
 
 export function moveCircle(event) {
   if (lastCircle && box) {
     const circleRadius = 25;
     const rect = box.getBoundingClientRect();
-
-    // Calculate the new position of the circle
     let x = event.clientX - circleRadius;
     let y = event.clientY - circleRadius;
 
+    // Check if the circle is inside the box
     const isInside = isInsideBox(x + circleRadius, y + circleRadius, rect, circleRadius);
 
     if (isInside) {
-      hasEntered = true;
+      // Update circle to purple and trap inside the box
       lastCircle.style.backgroundColor = 'var(--purple)';
+      x = Math.max(rect.left + 1, Math.min(x, rect.right - circleRadius * 2 - 1));
+      y = Math.max(rect.top + 1, Math.min(y, rect.bottom - circleRadius * 2 - 1));
     } else {
-      hasEntered = false;
       lastCircle.style.backgroundColor = 'white';
-    }
-
-    if (hasEntered) {
-      // Restrict circle movement within the box
-      x = Math.max(rect.left + circleRadius + 1, Math.min(x, rect.right - circleRadius - 1));
-      y = Math.max(rect.top + circleRadius + 1, Math.min(y, rect.bottom - circleRadius - 1));
     }
 
     lastCircle.style.left = `${x}px`;
@@ -56,8 +48,8 @@ export function setBox() {
     box.style.width = '200px';
     box.style.height = '200px';
     box.style.border = '1px solid var(--clear)';
-    box.style.left = `calc(50% - 100px)`;
-    box.style.top = `calc(50% - 100px)`;
+    box.style.left = `calc(50% - 100px)`; // Center horizontally
+    box.style.top = `calc(50% - 100px)`; // Center vertically
     document.body.appendChild(box);
   }
 }
