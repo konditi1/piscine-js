@@ -1,12 +1,13 @@
 
-export function generateClasses() {
+  export function generateClasses() {
     const style = document.createElement('style');
-    const styleContent = colors.map(color => `.${color} { background: ${color}; }`).join('\n');
-    
-    style.textContent = styleContent;
     document.head.appendChild(style);
+  
+    const styleContent = colors.map(color => `.${color} { background: ${color}; }`).join('\n');
+    style.textContent = styleContent;
   }
   
+
   export function generateColdShades() {
     const coldColors = ['aqua', 'blue', 'turquoise', 'green', 'cyan', 'navy', 'purple'];
     const container = document.body;
