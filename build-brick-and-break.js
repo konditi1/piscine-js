@@ -11,9 +11,10 @@ const createBrick = (id, content, isFoundation) => {
   
   export function build(totalBricks) {
     let brickCount = 1;
-    
+  
     const interval = setInterval(() => {
-      const isFoundation = brickCount % 3 === 0;
+      // Foundation bricks are those where the brickCount % 3 equals 2
+      const isFoundation = brickCount % 3 === 2;
       const brick = createBrick(brickCount, brickCount, isFoundation);
       
       document.body.appendChild(brick);
@@ -44,4 +45,4 @@ const createBrick = (id, content, isFoundation) => {
       lastBrick.remove();
     }
   }
-    
+  
