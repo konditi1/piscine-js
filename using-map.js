@@ -1,28 +1,40 @@
-const citiesOnly = (cities) => cities.map(city => city.city)
+const citiesOnly = cities => cities.map(city => city.city)
 
-const upperCasingStates = arr => arr.map(val => {
-    let splitArr = val.split(" ")
-    let capitalizedArr = splitArr.map(splitVal => {
-        return splitVal.charAt(0).toUpperCase() +
-         splitVal.slice(1).toLowerCase()
-        
-    })
-    return capitalizedArr.join(" ")
+const upperCasingStates = states => states.map(state => {
+    return state
+       .split(" ")
+       .map(word =>
+            word.charAt(0).toUpperCase() +
+            word.slice(1).toLowerCase()
+    )
+    .join(" ")
 })
 
 const fahrenheitToCelsius = arr => arr.map(val => {
-    splitVal = val.split("°")
-    num = Number(splitVal[0])
-    return (Math.floor((num - 32)/1.8))    
+    let splitVal = val.split("°")
+    let num = Number(splitVal[0])
+    return (Math.floor((num - 32)/1.8) + "°C")    
 })
 
-const trimTemp = arr => arr.map(val => {
-    let splitVal = val.temperature.split(" ")
-    let joinedVal = splitVal.join("")
-    return {...val, temperature: joinedVal}
+const trimTemp = temps => temps.map(temp => {
+    let trimed = temp.temperature.trim().split(" ").join("")
+    return {...temp, temperature: trimed }  //  city: temp.city
 })
 
-console.log(trimTemp([
-    { city: 'Los Angeles', temperature: '  101 °F   ' },
-    { city: 'San Francisco', temperature: ' 84 ° F   ' },
-  ]))
+const tempForecasts = (arr) => {
+    return arr.map(({ temperature, city, state }) => {
+        return `${celsius(temperature)} in ${city}, ${caps(state)}`;
+    });
+};
+
+const celsius = (temp) => {
+    const fahrenheit = parseInt(temp, 10);
+    const celsiusValue = Math.floor((fahrenheit - 32) * (5/9));
+    return `${celsiusValue}°Celsius`;
+};
+
+const caps = (str) => {
+    return str.split(' ')
+              .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+              .join(' ');
+};
