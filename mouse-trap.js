@@ -38,8 +38,9 @@ export function moveCircle(event) {
     }
 
     if (hasEntered) {
-      x = Math.max(rect.left + 1, Math.min(x, rect.right - circleRadius * 2 - 1));
-      y = Math.max(rect.top + 1, Math.min(y, rect.bottom - circleRadius * 2 - 1));
+      // Restrict circle movement within the box
+      x = Math.max(rect.left + circleRadius + 1, Math.min(x, rect.right - circleRadius - 1));
+      y = Math.max(rect.top + circleRadius + 1, Math.min(y, rect.bottom - circleRadius - 1));
     }
 
     lastCircle.style.left = `${x}px`;
