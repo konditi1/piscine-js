@@ -17,7 +17,7 @@ const pick = (obj, keys) => {
 const omit = (obj, keys) => {
     let newObj = {}
     for (let key in obj) {
-        if (!keys.includes(key)) {
+        if (!keys.includes(key) && (obj.hasOwnProperty(key))) {
             newObj[key] = obj[key]
         }
     }
