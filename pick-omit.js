@@ -5,6 +5,7 @@ const pick = (obj, keys) => {
             newObj[key] = obj[key]
         }
     }
+    console.log(obj)
     return newObj
 }
 
