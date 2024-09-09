@@ -1,11 +1,16 @@
 const pick = (obj, keys) => {
     let newObj = {}
-    for (let key of keys) {
+    let keyArr = []
+    if (typeof keys === "string") {
+        keyArr = [keys] 
+    } else if (Array.isArray(keys)) {
+        keyArr = keys
+    }
+    for (let key of keyArr) {
         if (obj.hasOwnProperty(key)) {
             newObj[key] = obj[key]
         }
     }
-    console.log(obj)
     return newObj
 }
 
@@ -19,5 +24,5 @@ const omit = (obj, keys) => {
     return newObj
 }
 
-console.log(pick({ a: 1, b: 2, c: 3 }, "acb"))
+console.log(pick({ a: 1, b: 2, acb: 3 }, "acb"))
 console.log(omit({ a: 1, b: 2, c: 3 }, 'acb'))
