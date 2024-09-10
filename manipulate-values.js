@@ -17,6 +17,7 @@
   };
   
   const reduceValues = (obj, reducer, initialValue) => {
+    console.log(obj)
     // Handle objects with nested nutritional values
     return Object.keys(obj).reduce((acc, key) => {
       const item = obj[key];
