@@ -16,21 +16,20 @@
     }, {});
   };
   
-  const reduceValues = (obj, reducer, initialValue) => {
-    console.log(obj)
-    // Handle objects with nested nutritional values
-    return Object.keys(obj).reduce((acc, key) => {
-      const item = obj[key];
+  const reduceValues = (cart, reducer, initialValue) => {
+    return Object.keys(cart).reduce((acc, item) => {
+      const quantity = cart[item]; // Get the quantity from the cart
+      const nutrition = nutritionDB[item]; // Get the nutrition facts from the database
   
-      // If the item is an object (e.g., from nutritionDB), reduce its values
-      if (typeof item === 'object' && !Array.isArray(item)) {
-        const itemValue = Object.values(item).reduce(reducer, initialValue);
-        return acc + itemValue;
+      if (!nutrition) {
+        throw new Error(`Nutrition information for '${item}' not found in the database.`);
       }
   
-      // Otherwise, reduce directly
-      return reducer(acc, item);
+      // Normalize the values per 100 grams
+      const normalizedNutrition = Object.values(nutrition).reduce((sum, value) => {
+        return sum + value * (quantity / 100); // Adjust based on the quantity in grams
+      }, 0);
+  
+      return reducer(acc, normalizedNutrition);
     }, initialValue);
   };
-  
-
