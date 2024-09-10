@@ -16,7 +16,10 @@
     }, {});
   };
   
-  const reduceValues = (obj, reducer, initialValue) => {
-    return Object.values(obj).reduce(reducer, initialValue);
+  const reduceValues = (cart, db, key) => {
+    return Object.keys(cart).reduce((acc, item) => {
+      const itemWeight = cart[item] / 100;  // normalize to 100 grams
+      return acc + (db[item][key] * itemWeight);
+    }, 0);
   };
 
