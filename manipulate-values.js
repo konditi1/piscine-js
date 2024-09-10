@@ -16,6 +16,7 @@
     }, {});
   };
   
+  
   const reduceValues = (cart, reducer, initialValue) => {
     return Object.keys(cart).reduce((acc, item) => {
       const quantity = cart[item]; // Get the quantity from the cart
@@ -31,3 +32,5 @@
       return reducer(acc, calories);
     }, initialValue);
   };
+  ({ ctx }) => reduceValues(ctx.groceriesCart, (acc, cr) => acc + cr)
+  console.log({ ctx })
