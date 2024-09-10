@@ -17,7 +17,7 @@
   };
   
   
-  const reduceValues = (cart, reducer, initialValue) => {
+  const reduceValues = (cart, reducer, initialValue = 0) => {
     return Object.keys(cart).reduce((acc, item) => {
       const quantity = cart[item]; // Get the quantity from the cart
       const nutrition = nutritionDB[item]; // Get the nutrition facts from the database
@@ -38,6 +38,8 @@
       console.log(`Calories for ${item}: ${calories}`);
       console.log(`Accumulated total: ${acc + calories}\n`);
   
-      return reducer(acc, calories);
-    }, initialValue);
+      // Ensure the accumulator is a number
+      return reducer(Number(acc), Number(calories));
+    }, Number(initialValue)); // Ensure initial value is a number
   };
+  
