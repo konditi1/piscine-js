@@ -17,6 +17,19 @@
   };
   
   const reduceValues = (obj, reducer, initialValue) => {
-    return Object.values(obj).reduce(reducer, initialValue);
+    // Handle objects with nested nutritional values
+    return Object.keys(obj).reduce((acc, key) => {
+      const item = obj[key];
+  
+      // If the item is an object (e.g., from nutritionDB), reduce its values
+      if (typeof item === 'object' && !Array.isArray(item)) {
+        const itemValue = Object.values(item).reduce(reducer, initialValue);
+        return acc + itemValue;
+      }
+  
+      // Otherwise, reduce directly
+      return reducer(acc, item);
+    }, initialValue);
   };
+  
 
