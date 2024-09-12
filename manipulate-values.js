@@ -1,45 +1,31 @@
 
   const nutrients = { carbohydrates: 12, protein: 20, fat: 5 }
-  const filterValues = (obj, predicate) => {
-    return Object.keys(obj)
-      .filter(key => predicate(obj[key]))
-      .reduce((acc, key) => {
-        acc[key] = obj[key];
-        return acc;
-      }, {});
+  const filterValues = (obj, callback) => {
+    let result = {};
+    for (let[key, value] of Object.entries(obj)) {
+      if (callback(value)) {
+        result[key] = value;
+      }
+    }
+    return result;
   };
 
-  const mapValues = (obj, fn) => {
-    return Object.keys(obj).reduce((acc, key) => {
-      acc[key] = fn(obj[key]);
-      return acc;
-    }, {});
-  };
-  
-  
-  const reduceValues = (cart, reducer, initialValue = 0) => {
-    return Object.keys(cart).reduce((acc, item) => {
-      const quantity = cart[item]; // Get the quantity from the cart
-      const nutrition = nutritionDB[item]; // Get the nutrition facts from the database
-  
-      // Debugging logs
-      console.log(`Item: ${item}`);
-      console.log(`Quantity: ${quantity}g`);
-      console.log(`Nutrition:`, nutrition);
-  
-      if (!nutrition) {
-        throw new Error(`Nutrition information for '${item}' not found in the database.`);
-      }
-  
-      // Specifically sum only the calories, not all nutrients
-      const calories = nutrition.calories * (quantity / 100); // Normalize to the quantity in grams
-  
-      // More debugging logs
-      console.log(`Calories for ${item}: ${calories}`);
-      console.log(`Accumulated total: ${acc + calories}\n`);
-  
-      // Ensure the accumulator is a number
-      return reducer(Number(acc), Number(calories));
-    }, Number(initialValue)); // Ensure initial value is a number
-  };
-  
+const mapValues = (obj, callback) => {
+  let result = {}
+
+  for (let [key, value] of Object.entries(obj)) {
+    result[key] = callback(value)
+  }
+  return result
+}
+
+const reduceValues = (obj, callback) => {
+  let result = 0
+  for (let val of Object.values(obj)) {
+    result = callback(result, val)
+    // console.log((result))
+  }
+  return result
+}
+
+// console.log(reduceValues(nutrients, (acc, cr) => acc + cr))  
