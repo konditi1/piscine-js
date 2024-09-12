@@ -20,6 +20,7 @@ const mapKeys = (obj, callback) => {
 }
 
 const reduceKeys = (obj, callback) => {
+    console.log(obj)
     let result = ""
     let start = true
     for (let key in obj) {
