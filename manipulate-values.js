@@ -19,13 +19,13 @@ const mapValues = (obj, callback) => {
   return result
 }
 
-const reduceValues = (obj, callback, initialValue) => {
+const reduceValues = (obj, callback, initialValue = 0) => {
+  console.log((obj))
   let result = initialValue
   for (let val of Object.values(obj)) {
     result = callback(result, val)
-    // console.log((result))
   }
   return result
 }
 
-// console.log(reduceValues({ a: 1, b: 2, c: 3 }, (acc, cr) => acc + cr, 3))
+// console.log(reduceValues(ctx.groceriesCart, (acc, cr) => acc + cr))
