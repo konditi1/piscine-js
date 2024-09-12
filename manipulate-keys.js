@@ -1,4 +1,11 @@
-const nutrients = { carbohydrates: 12, protein: 20, fat: 5 }
+const nutrients ={
+    vinegar: 80,
+    sugar: 100,
+    oil: 50,
+    onion: 200,
+    garlic: 22,
+    paprika: 4
+  }
 
 const filterKeys = (obj, callback) => {
     let result = {}
@@ -19,18 +26,17 @@ const mapKeys = (obj, callback) => {
     return result
 }
 
-const reduceKeys = (obj, callback) => {
-    console.log(obj)
-    let result = ""
-    let start = true
+const reduceKeys = (obj, callback, initialValue = "") => {
+    // console.log(obj)
+    let result = initialValue
+    let start = true;
     for (let key in obj) {
-        if (start) {
-        result = key
-        start = false
-        continue
+        if ((start) && (initialValue === "")) {
+            result = key  
+            start = false     
+        } else {
+            result = callback(result, key)            
         }
-        result = callback(result, key)
     }
     return result
 }
-// console.log(reduceKeys(nutrients, (acc, cr) =>acc.concat(', ', cr)))
