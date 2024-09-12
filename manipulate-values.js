@@ -19,8 +19,8 @@ const mapValues = (obj, callback) => {
   return result
 }
 
-const reduceValues = (obj, callback) => {
-  let result = 0
+const reduceValues = (obj, callback, initialValue) => {
+  let result = initialValue
   for (let val of Object.values(obj)) {
     result = callback(result, val)
     // console.log((result))
@@ -28,4 +28,4 @@ const reduceValues = (obj, callback) => {
   return result
 }
 
-// console.log(reduceValues(nutrients, (acc, cr) => acc + cr))  
+// console.log(reduceValues({ a: 1, b: 2, c: 3 }, (acc, cr) => acc + cr, 3))
