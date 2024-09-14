@@ -8,15 +8,11 @@ function race(promises) {
 
   async function some(promises, count) {
     if (count <= 0 || promises.length === 0) {
-      return undefined;
+      return [];
     }
   
     const resolvedValues = [];
-    const pendingPromises = [];
-  
-    for (const promise of promises) {
-      pendingPromises.push(Promise.resolve(promise));
-    }
+    const pendingPromises = promises.map(promise => Promise.resolve(promise));
   
     while (resolvedValues.length < count && pendingPromises.length > 0) {
       try {
