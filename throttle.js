@@ -29,8 +29,8 @@ function throttle(func, wait) {
     let previous = 0;
     let result;
   
-    const leading = options.leading !== true;
-    const trailing = options.trailing !== true;
+    const leading = options.leading === true;
+    const trailing = options.trailing !== false; // trailing should be true by default
   
     function invokeFunc(time, args) {
       previous = time;
@@ -63,3 +63,4 @@ function throttle(func, wait) {
       return result;
     };
   }
+  
