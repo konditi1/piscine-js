@@ -1,10 +1,17 @@
-function race(promises) {
+async function race(promises = []) {
+    if (promises.length === 0) {
+      // Handle the case where no promises are provided
+      return new Promise(resolve => setTimeout(() => resolve(undefined), 10000));
+    }
+  
     return new Promise((resolve, reject) => {
+      // Iterate over each promise and attach handlers
       for (const promise of promises) {
         Promise.resolve(promise).then(resolve, reject);
       }
     });
   }
+  
 
   async function some(promises, count) {
     if (count <= 0 || promises.length === 0) {
