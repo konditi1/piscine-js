@@ -1,16 +1,12 @@
-async function race(promises) {
+function race(promises) {
     return new Promise((resolve, reject) => {
-      if (promises.length === 0) {
-        return resolve(); // Resolve immediately if no promises are provided
-      }
-      promises.forEach(promise => {
+      for (const promise of promises) {
         Promise.resolve(promise).then(resolve, reject);
-      });
+      }
     });
   }
-  
 
-async function some(promises, count) {
+  async function some(promises, count) {
     if (count <= 0 || promises.length === 0) {
       return [];
     }
