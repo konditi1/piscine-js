@@ -15,27 +15,20 @@ function retry(count, callback) {
     };
   }
 
-function timeout(delay, callback) {
+  function timeout(delay, callback) {
     return async function (...args) {
-      let timedOut = false;
-  
       const timeoutPromise = new Promise((_, reject) => {
         setTimeout(() => {
-          timedOut = true;
           reject(new Error('timeout'));
         }, delay);
       });
   
-      const result = await Promise.race([
+      // Use Promise.race to resolve the callback or the timeout first
+      return Promise.race([
         callback(...args),
         timeoutPromise
       ]);
-  
-      if (timedOut) {
-        throw new Error('timeout');
-      }
-  
-      return result;
     };
   }
+  
   
