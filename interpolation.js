@@ -1,13 +1,17 @@
 function interpolation({ step, start, end, callback, duration }) {
     const stepSize = (end - start) / step;
-    const delay = duration / step;
+    const interval = duration / step;
+    let currentStep = 0;
   
-    for (let i = 0; i < step; i++) {
-      setTimeout(() => {
-        const x = start + stepSize * i;
-        const y = delay * (i + 1);
+    const intervalId = setInterval(() => {
+      if (currentStep < step) {
+        const x = start + stepSize * currentStep;
+        const y = interval * (currentStep + 1);
         callback([x, y]);
-      }, delay * i);
-    }
+        currentStep++;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, interval);
   }
   
