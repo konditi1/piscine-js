@@ -24,42 +24,39 @@ function throttle(func, wait) {
     };
   }
 
-  
-  function opThrottle(fn, delay, { leading = false, trailing = true } = {}) {
-    let lastCallTime = 0;
-    let timer = null;
-    let result;
-  
-    return function throttled(...args) {
-      const now = Date.now();
-      
-      // Check if the leading option is enabled
-      if (!lastCallTime && leading === false) {
-        lastCallTime = now;
+
+function opThrottle(fn, waitTime, { leading = false, trailing = true } = {}) {
+  let lastExecutionTime = 0;
+  let timeoutId = null;
+
+  return function throttled(...args) {
+    const currentTime = Date.now();
+
+    // Handle leading call: set the last execution time if leading is false
+    if (!lastExecutionTime && !leading) {
+      lastExecutionTime = currentTime;
+    }
+
+    const timeSinceLastExecution = currentTime - lastExecutionTime;
+
+    // If enough time has passed, invoke the function immediately
+    if (timeSinceLastExecution > waitTime) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
       }
-  
-      const remainingTime = delay - (now - lastCallTime);
-  
-      // Leading edge execution
-      if (remainingTime <= 0 || remainingTime > delay) {
-        if (timer) {
-          clearTimeout(timer);
-          timer = null;
-        }
-        result = fn.apply(this, args);
-        lastCallTime = now;
-      } 
-      // Trailing edge execution
-      else if (!timer && trailing !== false) {
-        timer = setTimeout(() => {
-          result = fn.apply(this, args);
-          lastCallTime = leading ? Date.now() : 0; // Reset if leading is true
-          timer = null;
-        }, remainingTime);
-      }
-  
-      return result;
-    };
-  }
+      fn.apply(this, args);
+      lastExecutionTime = currentTime;
+    } 
+    // If trailing is enabled and there's no pending timeout, schedule a trailing call
+    else if (!timeoutId && trailing) {
+      timeoutId = setTimeout(() => {
+        fn.apply(this, args);
+        lastExecutionTime = leading ? Date.now() : 0; // Reset lastExecutionTime if leading
+        timeoutId = null;
+      }, waitTime);
+    }
+  };
+}
   
   
