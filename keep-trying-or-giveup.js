@@ -17,18 +17,30 @@ function retry(count, callback) {
 
   function timeout(delay, callback) {
     return async function (...args) {
+      let timeoutId;
+  
       const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           reject(new Error('timeout'));
         }, delay);
       });
   
-      // Use Promise.race to resolve the callback or the timeout first
-      return Promise.race([
-        callback(...args),
-        timeoutPromise
-      ]);
+      try {
+        const result = await Promise.race([
+          callback(...args),
+          timeoutPromise
+        ]);
+  
+        // Clear the timeout if the callback resolves before the timeout
+        clearTimeout(timeoutId);
+        return result;
+      } catch (error) {
+        // Ensure the timeout is cleared in case of an error as well
+        clearTimeout(timeoutId);
+        throw error;
+      }
     };
   }
+  
   
   
