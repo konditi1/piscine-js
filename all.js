@@ -1,31 +1,29 @@
-async function all(promisesObj) {
+async function all(promisesObj = {}) {
     const keys = Object.keys(promisesObj);
     
     // Handle empty object case
     if (keys.length === 0) {
       return {};
     }
-  
-    // Convert the object values to an array of promises
-    const promises = keys.map(key => promisesObj[key]);
-  
-    // Use an alternative to Promise.all
-    const results = await (async () => {
-      let resolved = [];
-      for (const promise of promises) {
-        try {
-          resolved.push(await promise);
-        } catch (error) {
-          resolved.push(error);
-        }
+    
+    const results = {};
+    const errors = [];
+    
+    // Iterate over keys and handle promises
+    for (const key of keys) {
+      try {
+        results[key] = await promisesObj[key];
+      } catch (error) {
+        // Store error if promise rejects
+        errors.push({ key, error });
       }
-      return resolved;
-    })();
-  
-    // Construct the result object
-    return keys.reduce((result, key, index) => {
-      result[key] = results[index];
-      return result;
-    }, {});
+    }
+    
+    if (errors.length > 0) {
+      // If there are errors, return the first one
+      throw errors[0].error;
+    }
+    
+    return results;
   }
   
