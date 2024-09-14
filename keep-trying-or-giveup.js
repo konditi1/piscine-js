@@ -8,7 +8,7 @@ function retry(count, callback) {
         } catch (error) {
           attempts++;
           if (attempts > count) {
-            throw new Error('Max retries exceeded');
+            throw error;
           }
         }
       }
