@@ -11,31 +11,29 @@ function race(promises) {
       return [];
     }
   
-    const resolvedValues = [];
+    const resolvedResults = [];
     const pendingPromises = promises.map(p => Promise.resolve(p));
-    const results = [];
   
-    // Create a helper function to track the resolved values
-    const trackResult = (result) => {
-      results.push(result);
-      if (results.length === count) {
-        // Ensure we return only the first `count` resolved values
-        return results;
-      }
-    };
+    // Create a promise that resolves when we have `count` resolved values
+    return new Promise((resolve, reject) => {
+      // Track remaining promises to wait for
+      let pendingCount = count;
   
-    while (results.length < count && pendingPromises.length > 0) {
-      try {
-        const result = await Promise.race(pendingPromises);
-        trackResult(result);
-        // Remove the resolved promise from pendingPromises
-        pendingPromises.splice(pendingPromises.indexOf(Promise.resolve(result)), 1);
-      } catch (error) {
-            return new error
-      }
-    }
+      pendingPromises.forEach(promise => {
+        promise.then(
+          result => {
+            resolvedResults.push(result);
+            pendingCount--;
   
-    // Ensure we return an array with `count` items or less if there are not enough resolved values
-    return results.length ? results : [];
+            // Resolve the promise when we have collected enough results
+            if (pendingCount === 0) {
+              resolve(resolvedResults);
+            }
+          },
+          // Reject on error
+          reject
+        );
+      });
+    });
   }
   
