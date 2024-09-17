@@ -1,52 +1,39 @@
-import http from 'http';
-import fs from 'fs/promises';
-import path from 'path';
+import { createServer } from 'node:http';
+import { writeFile } from 'node:fs/promises';  // Use promises for better async handling
 
-const PORT = 5000;
+const port = 5000;
 
-const server = http.createServer(async (req, res) => {
-  if (req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
+const server = createServer(async (request, response) => {
+    const url = new URL(request.url, `http://${request.headers.host}`);
+    const guestName = url.pathname.slice(1);
+    response.setHeader('Content-Type', 'application/json');
 
-    req.on('end', async () => {
-      try {
-        const guestName = req.url.slice(1); // Remove the leading '/'
-        
-        // Attempt to parse the JSON
-        let guestData;
-        try {
-          guestData = JSON.parse(body);
-        } catch (parseError) {
-          // If JSON parsing fails, return 400 Bad Request
-          res.writeHead(400, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ error: 'Invalid JSON' }));
-          return;
-        }
-        
-        // Ensure the directory exists
-        await fs.mkdir('guests', { recursive: true });
-        
-        // Write the guest data to a file
-        const filePath = path.join('guests', `${guestName}.json`);
-        await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
-
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(guestData));
-      } catch (error) {
-        console.error('Error:', error);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'server failed' }));
-      }
-    });
-  } else {
-    res.writeHead(405, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Method not allowed' }));
-  }
+    if (request.method === 'POST') {
+        let body = '';
+        request.on('data', chunk => body += chunk);
+        request.on('end', async () => {
+            try {
+                const jsonContent = JSON.parse(body);  // Parse the JSON content
+                await writeFile(`guests/${guestName}.json`, JSON.stringify(jsonContent, null, 2), 'utf8');  // Write file using promises
+                response.statusCode = 201;
+                response.end(JSON.stringify(jsonContent));  // Send back the JSON content
+            } catch (error) {
+                if (error instanceof SyntaxError) {
+                    response.statusCode = 400;
+                    response.end(JSON.stringify({ error: "Invalid JSON" }));
+                } else {
+                    console.error('Error writing file:', error);
+                    response.statusCode = 500;
+                    response.end(JSON.stringify({ error: "Server failed" }));
+                }
+            }
+        });
+    } else {
+        response.statusCode = 405;
+        response.end(JSON.stringify({ error: "Method Not Allowed" }));
+    }
 });
 
-server.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+server.listen(port, () => {
+    console.log(`Server started on localhost:${port}!`);
 });
