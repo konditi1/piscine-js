@@ -8,7 +8,7 @@ argv.forEach((val, index) => {
     let valArr = val
     if (val.includes(" ")) {
         valArr = val.split(" ")
-        valArr = valArr.map((val) => veryDisco(val)).join("")
+        valArr = valArr.map((val) => veryDisco(val)).join(" ")
         console.log(valArr)
         return
     }
