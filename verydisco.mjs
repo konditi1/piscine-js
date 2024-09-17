@@ -6,7 +6,7 @@ const veryDisco = (arg) => {
 
 argv.forEach((val, index) => {
     let valArr = val
-    if (val.includes(" ")) {
+    if (val.includes(" ") && (index > 1)) {
         valArr = val.split(" ")
         valArr = valArr.map((val) => veryDisco(val)).join(" ")
         console.log(valArr)
