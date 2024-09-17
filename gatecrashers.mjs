@@ -6,38 +6,39 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const PORT = 5000;
-const AUTHORIZED_USERNAMES = ['Caleb_Squires', 'Tyrique_Dalton', 'Rahima_Young'];
-const AUTH_PASSWORD = 'abracadabra';
-const GUESTS_DIRECTORY = 'guests';
+const AUTHORIZED_USERS = ['Caleb_Squires', 'Tyrique_Dalton', 'Rahima_Young'];
+const PASSWORD = 'abracadabra';
+const GUESTS_DIR = 'guests';
 
 const server = http.createServer(async (req, res) => {
-  const authorizationHeader = req.headers.authorization;
-  if (!authorizationHeader || !isValidAuthorization(authorizationHeader)) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !isAuthorized(authHeader)) {
     res.writeHead(401, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ error: 'Authorization Required' }));
     return;
   }
 
   if (req.method === 'POST') {
-    let requestBody = '';
+    let body = '';
     req.on('data', chunk => {
-      requestBody += chunk.toString();
+      body += chunk.toString();
     });
 
     req.on('end', async () => {
       try {
-        const guestData = JSON.parse(requestBody);
+        const guestData = JSON.parse(body);
         const guestName = req.url.slice(1);
-        const guestsDirectoryPath = join(__dirname, GUESTS_DIRECTORY);
-        const guestFilePath = join(guestsDirectoryPath, `${guestName}.json`);
+        const guestsPath = join(__dirname, GUESTS_DIR);
+        const filePath = join(guestsPath, `${guestName}.json`);
 
-        await fs.mkdir(guestsDirectoryPath, { recursive: true });
-        await fs.writeFile(guestFilePath, JSON.stringify(guestData, null, 2));
+        await fs.mkdir(guestsPath, { recursive: true });
+
+        await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
 
         res.writeHead(201, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(guestData));
       } catch (error) {
-        console.error('Error processing guest data:', error);
+        console.error('Error writing guest data:', error);
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Invalid JSON data' }));
       }
@@ -48,12 +49,12 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-function isValidAuthorization(authHeader) {
+function isAuthorized(authHeader) {
   const base64Credentials = authHeader.split(' ')[1];
-  const decodedCredentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-  const [username, password] = decodedCredentials.split(':');
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+  const [username, password] = credentials.split(':');
 
-  return AUTHORIZED_USERNAMES.includes(username) && password === AUTH_PASSWORD;
+  return AUTHORIZED_USERS.includes(username) && password === PASSWORD;
 }
 
 server.listen(PORT, () => {
