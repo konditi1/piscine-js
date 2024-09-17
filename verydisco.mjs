@@ -6,6 +6,5 @@ argsArr.forEach((arg, index) => {
     let first = arg.slice(0,end)
     let last = arg.slice(end)
     argsArr[index] = last + first
-
-    console.log(argsArr.join(' '))
 })
+console.log(argsArr.join(' '))
