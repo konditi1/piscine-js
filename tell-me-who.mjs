@@ -12,8 +12,7 @@ const tellMeWho = async (path) => {
 
         let sortedNames = unSortedNames.sort()
         for (let i = 0; i < sortedNames.length; i++) {
-            let name = sortedNames[i]
-            name = name.replace("-", " ")
+            let name = sortedNames[i].replace("-", " ")
             console.log((i+1) + ". " + name)
         }
     } catch (error) {
