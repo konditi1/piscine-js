@@ -4,10 +4,10 @@ const tellMeWho = async (path) => {
         const files = await readdir(path);
         const unSortedNames = []
         for (const file of files) {
-            let names = file.split(".")
-            let namesArr = names[0].split("_")
-            let lastFirst = (namesArr[1] + "-" + namesArr[0])
-            unSortedNames.push(lastFirst)
+            unSortedNames.push(
+                file.split(".")[0].split("_").reverse().join("-")
+            );
+            
         }
 
         let sortedNames = unSortedNames.sort()
