@@ -1,6 +1,6 @@
 const word = process.argv
 let args = word[2]
-let argsArr = str.split(' ')
+let argsArr = args.split(' ')
 
 for(let i in argsArr) {
     let arg = argsArr[i]
