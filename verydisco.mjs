@@ -5,7 +5,14 @@ const veryDisco = (arg) => {
 }
 
 argv.forEach((val, index) => {
+    let valArr = val
+    if (val.includes(" ")) {
+        valArr = val.split(" ")
+        valArr = valArr.map((val) => veryDisco(val)).join("")
+        console.log(valArr)
+        return
+    }
     if (index > 1) {
-        console.log(veryDisco(val));
+        console.log(veryDisco(valArr));
     }
 })
