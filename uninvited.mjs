@@ -14,7 +14,17 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       try {
         const guestName = req.url.slice(1); // Remove the leading '/'
-        const guestData = JSON.parse(body);
+        
+        // Attempt to parse the JSON
+        let guestData;
+        try {
+          guestData = JSON.parse(body);
+        } catch (parseError) {
+          // If JSON parsing fails, return 400 Bad Request
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid JSON' }));
+          return;
+        }
         
         // Ensure the directory exists
         await fs.mkdir('guests', { recursive: true });
