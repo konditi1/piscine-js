@@ -1,64 +1,59 @@
-import http from 'http';
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import http from "http";
+import { readFile, writeFile } from "fs/promises";
+import { Buffer } from "node:buffer";
 
-const PORT = 5000;
-const AUTHORIZED_USERS = ['Caleb_Squires', 'Tyrique_Dalton', 'Rahima_Young'];
-const PASSWORD = 'abracadabra';
-const GUESTS_DIR = 'guests';
+const serverHost = "localhost";
+const serverPort = 5000;
+const guestsDirectory = `guests`;
+const authorizedUsers = ["Caleb_Squires", "Tyrique_Dalton", "Rahima_Young"];
 
-const server = http.createServer(async (req, res) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !isAuthorized(authHeader)) {
-    res.writeHead(401, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Authorization Required' }));
-    return;
-  }
+const handleGuestData = (request, response) => {
+    
+	let responseStatusCode = 200;
+	response.setHeader("Content-Type", "application/json");
+	const guestFileName = `${request.url.slice(1)}.json`;
 
-  if (req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => {
-      body += chunk.toString();
-    });
+	const sendErrorResponse = (error, statusCode, message) => {
+		const errorResponseBody = JSON.stringify({ error: message });
+		response
+			.writeHead(statusCode, {
+				"Content-Length": Buffer.byteLength(errorResponseBody),
+			})
+			.end(errorResponseBody);
+	};
 
-    req.on('end', async () => {
-      try {
-        const guestData = JSON.parse(body);
-        const guestName = req.url.slice(1);
-        const guestsPath = join(__dirname, GUESTS_DIR);
-        const filePath = join(guestsPath, `${guestName}.json`);
+	const authorizationHeader = request.headers["authorization"];
+	if (!authorizationHeader) {
+		sendErrorResponse("no credentials found", 401, "no credentials found");
+		return;
+	}
 
-        await fs.mkdir(guestsPath, { recursive: true });
+	const credentials = Buffer.from(authorizationHeader.slice(6), "base64")
+		.toString()
+		.split(":");
 
-        await fs.writeFile(filePath, JSON.stringify(guestData, null, 2));
+	if (
+		!authorizedUsers.includes(credentials[0]) ||
+		credentials[1] !== "abracadabra"
+	) {
+		sendErrorResponse("wrong credentials", 401, "Authorization Required%");
+		return;
+	}
 
-        res.writeHead(201, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(guestData));
-      } catch (error) {
-        console.error('Error writing guest data:', error);
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Invalid JSON data' }));
-      }
-    });
-  } else {
-    res.writeHead(405, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Method Not Allowed' }));
-  }
+	let requestBody = request.headers["body"];
+	writeFile(`${guestsDirectory}/${guestFileName}`, requestBody)
+		.then(() => {
+			const successResponseBody = requestBody;
+			response
+				.writeHead(responseStatusCode, {
+					"Content-Length": Buffer.byteLength(successResponseBody),
+				})
+				.end(successResponseBody);
+		})
+		.catch((error) => sendErrorResponse(error, 500, "Failed to write file"));
+};
+const httpServer = http.createServer(handleGuestData);
+httpServer.listen(serverPort, serverHost, () => {
+	console.log(`${serverPort}`);
 });
-
-function isAuthorized(authHeader) {
-  const base64Credentials = authHeader.split(' ')[1];
-  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-  const [username, password] = credentials.split(':');
-
-  return AUTHORIZED_USERS.includes(username) && password === PASSWORD;
-}
-
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-export { server };
